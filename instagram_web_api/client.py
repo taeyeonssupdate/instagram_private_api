@@ -309,11 +309,9 @@ class Client(object):
 
     @staticmethod
     def _extract_rhx_gis(html):
-        mobj = re.search(
-            r'"rhx_gis":"(?P<rhx_gis>[a-f0-9]{32})"', html, re.MULTILINE)
-        if mobj:
-            return mobj.group('rhx_gis')
-        return None
+        options = string.ascii_lowercase + string.digits
+        text = ''.join([random.choice(options) for _ in range(8)])
+        return hashlib.md5(text.encode()).hexdigest()
 
     @staticmethod
     def _extract_csrftoken(html):
